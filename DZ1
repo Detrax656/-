@@ -1,0 +1,163 @@
+№4 Практическое занятие Самостоятельная работа
+--------------№1
+
+#include <iostream>
+using namespace std;
+int main(){
+    int x, y;
+    cin >> x;
+    cin >> y;
+    if (x>y){
+        cout<< x;
+    } else {
+        cout<< y;
+    }
+return 0;
+}
+
+--------------№2
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+int main(){
+    double S,V0,a,t;
+    cin >> S;
+    cin >> V0;
+    cin >> a;
+    
+    double A = a/2;
+    double B = V0;
+    double C = -S;
+    
+    if(A == 0){
+        if(B == 0){
+            cout << "Нет решения";
+        } else {
+            t = -C/B;
+            if(t >= 0) cout << t;
+            else cout << "Нет Неотрицательных Решений";
+        }
+        return 0;
+    }
+    
+    double D = B*B - 4*A*C;
+
+    if(D < 0){
+        cout << "Нет решения";
+    }
+    else if(D == 0){
+        t = -B/(2*A);
+        if(t >= 0) cout << t;
+        else cout << "Нет Неотрицательных Решений";
+    }
+    else{
+        double t1 = (-B + sqrt(D))/(2*A);
+        double t2 = (-B - sqrt(D))/(2*A);
+
+        if(t1 >= 0 && t2 >= 0){
+            if (t1 < t2)
+                t = t1;
+            else
+                t = t2;
+            cout << t;
+        }
+        else if(t1 >= 0){
+            cout << t1;
+        }
+        else if(t2 >= 0){
+            cout << t2;
+        }
+        else{
+            cout << "Нет Неотрицательных Решений";
+        }
+    }
+return 0;
+}
+
+--------------№3
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    string roman = "";
+    
+    while(n >= 1000) { roman += "M"; n -= 1000; }
+    while(n >= 900) { roman += "CM"; n -= 900; }
+    while(n >= 500) { roman += "D"; n -= 500; }
+    while(n >= 400) { roman += "CD"; n -= 400; }
+    while(n >= 100) { roman += "C"; n -= 100; }
+    while(n >= 90) { roman += "XC"; n -= 90; }
+    while(n >= 50) { roman += "L"; n -= 50; }
+    while(n >= 40) { roman += "XL"; n -= 40; }
+    while(n >= 10) { roman += "X"; n -= 10; }
+    while(n >= 9) { roman += "IX"; n -= 9; }
+    while(n >= 5) { roman += "V"; n -= 5; }
+    while(n >= 4) { roman += "IV"; n -= 4; }
+    while(n >= 1) { roman += "I"; n -= 1; }
+    
+    cout << roman;
+    return 0;
+}
+
+--------------№4
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int A, B;
+    cin >> A >> B;
+
+    int c = 0;
+    while (A > B) {
+        if (A % 2 == 0 && A / 2 >= B) {
+            A /= 2;
+        } else {
+            A--;
+        }
+        c++;
+    }
+
+    cout << c;
+    return 0;
+}
+
+--------------№5
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int A, B, N;
+    cin >> A >> B >> N;
+    
+    int a = 0, b = 0;
+    
+    while (a != N && b != N) {
+        if (a == 0) {
+            a = A;
+            cout << ">A" << endl;
+        }
+        else if (b == B) {
+            b = 0;
+            cout << "B>" << endl;
+        }
+        else {
+            int perelitkvac = min(a, B - b);
+            a -= perelitkvac;
+            b += perelitkvac;
+            cout << "A>B" << endl;
+        }
+        if (a == 0 && b == 0) {
+            cout << "mission impossible 2";
+            return 0;
+        }
+    }
+    cout << " uraaaa kvaccc";
+    return 0;
+}
