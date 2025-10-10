@@ -1,1 +1,138 @@
+#1-------------------------
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[100];
+	int i,n;
+	cin>> n;
+	
+	for (int i=0; i<n;i++){
+
+	    cin >> arr[i];
+	}
+	for (i = 0; i <n;i++){
+	    if (arr[i]<=16) {
+	        cout << arr[i] << " ";
+	    }
+	}
+	
+    return 0;
+}
+
+#2-------------------------
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n,k; 
+    cin >> n;
+    cin >> k;
+    int arr[1000];
+    for (int i = 0; i < n; i++){
+        cin >> arr[i];
+        
+    }
+    k=k%n;
+    
+    for (int i = 0; i < n;i++){
+        int newid = (i - k + n) % n;
+        cout << arr[newid];
+        
+        if (i < n - 1){
+            cout << " ";
+        }
+    }
+    
+    return 0;
+}
+
+#3-------------------------
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int N, M, W;
+    cin >> N >> M >> W;
+    bool f[32][32] = {false};
+    
+    for (int i = 0; i < W; i++) {
+        int x, y;
+        cin >> x >> y;
+        f[x-1][y-1] = true;
+    }
+    
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            if (f[i][j]) cout << "*";
+            else {
+                int c = 0;
+                for (int a = -1; a <= 1; a++)
+                    for (int b = -1; b <= 1; b++) {
+                        int ni = i+a, nj = j+b;
+                        if (ni >= 0 && ni < N && nj >= 0 && nj < M && f[ni][nj]) c++;
+                    }
+                cout << c;
+            }
+            if (j < M-1) cout << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
+
+#4-------------------------
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    int total = 0;
+    
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (i + j < N - 1) {
+                cout << 0;
+            } else if (i + j == N - 1) {
+                cout << 1;
+                total += 1;
+            } else {
+                cout << 2;
+                total += 2;
+            }
+        }
+        cout << endl;
+    }
+    
+    cout << total << endl;
+    
+    return 0;
+}
+
+#5-------------------------
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int result = 0;
+    
+    for (int i = 0; i < n; i++) {
+        int num;
+        cin >> num;
+        result ^= num; // Побитовое исключающее ИЛИ (тлдр превращаем в 0 все кроме того что не повторяется
+    }
+    
+    cout << result << endl;
+    
+    return 0;
+}
+// ноль по памяти и времени потомушо ток 1 перменая и нет циклов итд, xor выполн за константное время
