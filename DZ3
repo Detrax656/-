@@ -1,1 +1,60 @@
+#1
+
+#include <iostream>
+using namespace std;
+
+  bool mena(int numberOfCigaretts){
+        int numberOfKotlyGeneralskie = 10;
+        if (numberOfCigaretts == numberOfKotlyGeneralskie){
+            return true;
+        } else{
+            return false;
+        }
+    }
+int main() {
+    int number;
+        cin >> number;
+        cout << mena(number);
+        return 0;
+}
+
+#2 
+
+#include <iostream>
+using namespace std;
+string brackets(string inputString){
+    int n= inputString.length();
+    if (inputString.size() <= 2){
+        return inputString;
+    }
+        return string(1, inputString[0]) + '(' + brackets(inputString.substr(1, inputString.size()-2)) + ')' +inputString[inputString.size()-1];
+}
+int main() {
+    string inputString;
+    cin >> inputString;
+    cout << brackets(inputString);
+    return 0;
+}
+
+#3
+
+#include <iostream>
+using namespace std;
+
+void reverse(){
+    
+    int n;
+    cin >> n;
+    if (n==0) return;
+    reverse();
+    cout << n << endl;
+}
+
+int main() {
+    reverse();
+    return 0;
+ 
+}
+
+#4
 
