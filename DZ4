@@ -1,101 +1,184 @@
 #1--------------------
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
-  bool mena(int numberOfCigaretts){
-        int numberOfKotlyGeneralskie = 10;
-        if (numberOfCigaretts == numberOfKotlyGeneralskie){
-            return true;
-        } else{
-            return false;
+int main() {
+    int N, M;
+    cin >> N >> M;
+    
+    vector<vector<int>> grid(N, vector<int>(M));
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            cin >> grid[i][j];
         }
     }
-int main() {
-    int number;
-        cin >> number;
-        cout << mena(number);
-        return 0;
+    
+    vector<vector<int>> dp(N, vector<int>(M));
+    dp[0][0] = grid[0][0];
+    for (int j = 1; j < M; j++) {
+        dp[0][j] = dp[0][j-1] + grid[0][j];
+    }
+    for (int i = 1; i < N; i++) {
+        dp[i][0] = dp[i-1][0] + grid[i][0];
+    }
+    for (int i = 1; i < N; i++) {
+        for (int j = 1; j < M; j++) {
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + grid[i][j];
+        }
+    }
+    
+    vector<pair<int, int>> path;
+    int i = N-1, j = M-1;
+    
+    while (i > 0 || j > 0) {
+        path.push_back({i, j});
+        
+        if (i == 0) {
+            j--;
+        } else if (j == 0) {
+            i--;
+        } else {
+            if (dp[i-1][j] > dp[i][j-1]) {
+                i--;
+            } else {
+                j--;
+            }
+        }
+    }
+    path.push_back({0, 0});
+    
+    for (int k = path.size()-1; k >= 0; k--) {
+        cout << path[k].first << " " << path[k].second << endl;
+    }
+    
+    return 0;
 }
 
 #2 --------------------
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
-string brackets(string inputString){
-    int n= inputString.length();
-    if (inputString.size() <= 2){
-        return inputString;
-    }
-        return string(1, inputString[0]) + '(' + brackets(inputString.substr(1, inputString.size()-2)) + ')' +inputString[inputString.size()-1];
-}
+
 int main() {
-    string inputString;
-    cin >> inputString;
-    cout << brackets(inputString);
+    int N, D;
+    cin >> N >> D;
+    
+    vector<int> pies(N);
+    for (int i = 0; i < N; i++) {
+        cin >> pirogi[i];
+    }
+    
+    sort(pirogi.begin(), pirogi.end());
+    
+    int min_diff = 1000000;
+    for (int i = 0; i <= N - D; i++) {
+        min_diff = min(min_diff, pirogi[i + D - 1] - pirogi[i]);
+    }
+    
+    cout << min_diff;
     return 0;
 }
 
 #3--------------------
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-void reverse(){
-    
-    int n;
-    cin >> n;
-    if (n==0) return;
-    reverse();
-    cout << n << endl;
-}
-
 int main() {
-    reverse();
+    int N, K, L;
+    cin >> N >> K >> L;
+    
+    vector<int> costs(N);
+    for (int i = 0; i < N; i++) {
+        cin >> costs[i];
+    }
+    
+    sort(costs.begin(), costs.end(), greater<int>());
+    
+    int total = 0;
+    for (int i = 0; i < K; i++) {
+        total += costs[i % (L * K)];
+    }
+    
+    cout << total;
     return 0;
- 
 }
 
 #4--------------------
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-long long fastPow(long long base, long long exp) {
-    long long result = 1;
-    while (exp > 0) {
-        if (exp % 2 == 1) {
-            result *= base;
-        }
-        base *= base;
-        exp /= 2;
-    }
-    return result;
-}
-
 int main() {
-    long long a, n;
-    cin >> a >> n;
-    cout << fastPow(a, n) << endl;
+    string s;
+    getline(cin, s);
+    
+    int balanc = 0;
+    
+    for (char c : s) {
+        if (c == '(') balanc++;
+        if (c == ')') balanc--;
+        if (balanc < 0) break;
+    }
+    
+    if (balanc == 0) cout << "yes";
+    else cout << "no";
+    
     return 0;
 }
 
 #5--------------------
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
 using namespace std;
 
-void move(int n, int from, int to, int temp) {
-    if (n == 0) return;
-    
-    move(n - 1, from, temp, to);
-    cout << "Ingredient " << n << " move from " << from << " to " << to << endl;
-    move(n - 1, temp, to, from);
-}
-
 int main() {
-    int n;
-    cin >> n;
-    move(n, 1, 3, 2);
+    string s;
+    getline(cin, s);
+    
+    vector<string> unique_words;
+    string current_word = "";
+    
+    for (int i = 0; i <= s.length(); i++) {
+        char c = s[i];
+        
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
+            (c >= 'а' && c <= 'я') || (c >= 'А' && c <= 'Я') ||
+            (c == '-' && !current_word.empty())) {
+            
+            if (c >= 'A' && c <= 'Z') c = c - 'A' + 'a';
+            else if (c >= 'А' && c <= 'Я') c = c - 'А' + 'а';
+            
+            current_word += c;
+        }
+        else if (!current_word.empty()) {
+            bool found = false;
+            for (const auto& word : unique_words) {
+                if (word == current_word) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                unique_words.push_back(current_word);
+            }
+            current_word = "";
+        }
+    }
+    
+    for (const auto& word : unique_words) {
+        cout << word << endl;
+    }
+    
     return 0;
 }
